@@ -1,0 +1,6 @@
+2024-04-19 20:25:58,589 ERROR:Failed to load JSON data: [Errno 2] No such file or directory: 'trimmed_meta.json'
+2024-04-19 20:25:58,589 ERROR:Error getting collections: 'items'
+2024-04-19 20:25:59,988 INFO:Collection selected.
+2024-04-19 20:26:03,301 INFO:Collection selected.
+2024-04-19 20:26:28,407 ERROR:Error getting collections: 'items'
+2024-04-19 20:26:29,771 INFO:Collection selected.

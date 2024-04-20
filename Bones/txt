@@ -1,0 +1,53 @@
+import tkinter as tk
+from tkinter import ttk, messagebox
+from PIL import Image, ImageTk
+import json
+import os
+
+# Paths
+json_path = 'collections.json'
+thumbnails_dir = './thumbnails'
+
+# Load JSON Data
+def load_json_data(filepath):
+    with open(filepath, 'r') as file:
+        return json.load(file)
+
+# Main Application Class
+class ArtBoxApp(tk.Tk):
+    def __init__(self, json_path, thumbnail_dir):
+        super().__init__()
+        self.json_path = json_path
+        self.thumbnail_dir = thumbnail_dir
+        self.title("ArtBox Gallery")
+        self.data = load_json_data(self.json_path)  # Notice we call the function directly here
+        self.setup_ui()
+
+    def setup_ui(self):
+        # Frame for the item list
+        self.frame_items = ttk.Frame(self)
+        self.frame_items.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+        self.frame_items.columnconfigure(0, weight=1)
+        self.frame_items.rowconfigure(0, weight=1)
+        
+        # Listbox for items
+        self.listbox_items = tk.Listbox(self.frame_items)
+        self.listbox_items.pack(side="left", fill="both", expand=True)
+        self.populate_items_listbox()
+
+        # Scrollbar for the listbox
+        self.scrollbar_items = tk.Scrollbar(self.frame_items, command=self.listbox_items.yview)
+        self.scrollbar_items.pack(side="right", fill="y")
+        self.listbox_items.configure(yscrollcommand=self.scrollbar_items.set)
+
+    def populate_items_listbox(self):
+        # Assuming the data structure is a list of items
+        for item in self.data:
+            self.listbox_items.insert(tk.END, item['meta']['name'])
+        self.listbox_items.bind('<<ListboxSelect>>', self.display_item_details)
+
+    # ... Rest of the class code ...
+
+# Run the app
+if __name__ == "__main__":
+    app = ArtBoxApp(json_path, thumbnails_dir)

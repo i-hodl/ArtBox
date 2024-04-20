@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFT Display</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f7f7f7;
+  }
+  .container {
+    text-align: center;
+    border: 1px solid #e1e1e1;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .nft-image img {
+    max-width: 100%;
+    height: auto;
+    border-bottom: 1px solid #e1e1e1;
+    margin-bottom: 20px;
+  }
+  .metadata {
+    text-align: left;
+  }
+  .metadata h1 {
+    margin: 0;
+    padding: 0;
+  }
+  .metadata p {
+    color: #666;
+  }
+  .attributes {
+    text-align: left;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nft-image">
+    <!-- Image will be loaded here via JavaScript -->
+  </div>
+  <div class="metadata">
+    <h1 id="nft-title"><!-- Title will be loaded here via JavaScript --></h1>
+    <p id="nft-description"><!-- Description will be loaded here via JavaScript --></p>
+  </div>
+  <div class="attributes" id="nft-attributes">
+    <!-- Attributes will be loaded here via JavaScript -->
+  </div>
+</div>
+
+<script>
+  // Assuming 'data' is your NFT metadata object loaded from 'collections.json'
+  // This is just a placeholder, the actual object should come from your JSON
+  const data = {
+    "meta": {
+      "name": "Street Art | 1",
+      "description": "Enjoy some classy, yet bold street art. A collection of blockchain meets graffiti, on walls all over the world.",
+      "attributes": [
+        {"key": "Born", "value": "06/16/2020"},
+        {"key": "Artist", "value": "iH0DL"},
+        // ... other attributes
+      ],
+      "content": [
+        {"@type": "IMAGE", "url": "https://ipfs.raribleuserdata.com/ipfs/QmZeBNgbXBgfn7iJ21rGW8TUYq5nr9HvEsYuyZFmJCivMQ"}
+        // ... other content if needed
+      ]
+    }
+    // ... other properties
+  };
+
+  // Load NFT data into the page
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const titleElement = document.getElementById('nft-title');
+    const descriptionElement = document.getElementById('nft-description');
+    const attributesElement = document.getElementById('nft-attributes');
+    const imageContainer = document.querySelector('.nft-image');
+
+    // Set title and description
+    titleElement.textContent = data.meta.name;
+    descriptionElement.textContent = data.meta.description;
+
+    // Set image
+    const imageElement = document.createElement('img');
+    imageElement.src = data.meta.content[0].url;
+    imageContainer.appendChild(imageElement);
+
+    // Set attributes
+    data.meta.attributes.forEach(attribute => {
+      const attributeElement = document.createElement('p');
+      attributeElement.textContent = `${attribute.key}: ${attribute.value}`;
+      attributesElement.appendChild(attributeElement);
+    });
+  });
+</script>
+</body>
+</html>
